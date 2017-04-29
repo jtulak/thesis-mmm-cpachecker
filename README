@@ -1,0 +1,6 @@
+BUILD INSTRUCTIONS
+
+1) Download cpachecker for unix and rename the archive as:
+   cpachecker.tar.bz2
+2) $ make
+
