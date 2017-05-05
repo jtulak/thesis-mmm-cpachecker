@@ -46,14 +46,27 @@ else
 	fi
 fi
 
+CPADIR="/cpachecker/"$(ls /cpachecker)
+CPABIN="$CPADIR/scripts/cpa.sh"
+
 if [ $INTERACTIVE -eq 0 ]; then
 	if [ $CLEAN -eq 1 ]; then
 		echo "make clean..."
 		make clean &>/dev/null
 		echo
 	fi
-	echo "csbuild -c make..."
-	csbuild -c make
+	echo "Running CPA..."
+	# for every C file in mkfs dir
+	for file in $(ls mkfs | grep "\.c$"); do
+		echo
+		echo "# ---------------------------"
+		echo "# $file"
+		echo "# ---------------------------"
+		echo
+		$CPABIN \
+			-config $CPADIR/config/predicateAnalysis.properties \
+			mkfs/$file
+	done
 else
 	exec /bin/bash
 fi
